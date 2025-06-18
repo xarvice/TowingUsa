@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Towing Services</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        /* Root Variables */
+        :root {
+            --bg: #000;
+            --text: #00bfff;
+            --card: #111;
+            --subtext: #aaa;
+            --hover-blue: #0074d9;
+            --hover-blue-light: #3399ff;
+            --accent: #ff4136;
+            --success: #2ecc40;
+            --warning: #ffdc00;
+            --modal-bg: rgba(0, 0, 0, 0.8);
+            --input-bg: #222;
+            --input-border: #444;
+        }
+
+        /* Light Theme */
+        body.light {
+            --bg: #fff;
+            --text: #111;
+            --card: #f0f0f0;
+            --subtext: #555;
+            --hover-blue: #0056b3;
+            --hover-blue-light: #3399ff;
+            --modal-bg: rgba(255, 255, 255, 0.95);
+            --input-bg: #fff;
+            --input-border: #ddd;
+        }
+
+        /* Base Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            margin: 0;
+            padding: 0;
+            color: var(--text);
+            transition: background 0.4s, color 0.4s;
+            line-height: 1.6;
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: var(--card);
+            border-radius: 15px;
+            margin-top: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        .contact-container h1 {
+            color: var(--text);
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+
+        .contact-container > p {
+            color: var(--subtext);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .contact-info {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid var(--input-border);
+        }
+
+        .contact-info h3 {
+            color: var(--text);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: var(--subtext);
+        }
+
+        .info-item i {
+            font-size: 24px;
+            color: var(--hover-blue);
+            margin-right: 15px;
+        }
+
+        .info-item h4 {
+            color: var(--text);
+            margin: 0 0 5px 0;
+        }
+
+        .info-item p {
+            margin: 0;
+            color: var(--subtext);
+        }
+
+        .contact-form {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid var(--input-border);
+        }
+
+        .contact-form h3 {
+            color: var(--text);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--input-border);
+            border-radius: 5px;
+            font-size: 16px;
+            background: var(--input-bg);
+            color: var(--text);
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--hover-blue);
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: var(--hover-blue);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: var(--hover-blue-light);
+            transform: translateY(-2px);
+        }
+
+        .map-container {
+            margin-top: 40px;
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--input-border);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="emergency-banner">
+        <a href="tel:720-737-9118" class="emergency-phone">
+            <i class="fas fa-phone-alt"></i>
+            1-888-758-2424
+        </a>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo">TOWMAN USA</a>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#services">Services</a></li>
+                    <li><a href="index.html#pricing">Pricing</a></li>
+                    <li><a href="index.html#calculator">Calculator</a></li>
+                    <li><a href="contact.html" class="active">Contact</a></li>
+                    <li><a href="#" onclick="showModal('login')">Login</a></li>
+                    <li><a href="#" onclick="showModal('signup')">Sign Up</a></li>
+                </ul>
+                <div class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme"></div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="contact-container">
+        <h1>Contact Us</h1>
+        <p>Get in touch with us for any questions or assistance you need.</p>
+
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <h4>Address</h4>
+                        <p>123 Towing Street, City, State 12345</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <h4>Phone</h4>
+                        <p>+1 (555) 123-4567</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h4>Email</h4>
+                        <p>info@towingservices.com</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <h4>Business Hours</h4>
+                        <p>24/7 Emergency Service</p>
+                        <p>Monday - Sunday: 24 Hours</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h3>Send us a Message</h3>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="map-container">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387193.30591910525!2d-74.25986432970718!3d40.697149422113014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2s!4v1647043087964!5m2!1sen!2s" 
+                allowfullscreen="" 
+                loading="lazy">
+            </iframe>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Add your form submission logic here
+            alert('Thank you for your message. We will get back to you soon!');
+            this.reset();
+        });
+
+        // Theme toggle functionality
+        function toggleTheme() {
+            document.body.classList.toggle('light');
+        }
+
+        // Modal functionality
+        function showModal(type) {
+            // Add your modal logic here
+            alert('Modal functionality will be implemented soon!');
+        }
+
+        // Initialize GSAP animations
+        gsap.from('.contact-container', {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: 'power3.out'
+        });
+
+        gsap.from('.contact-info, .contact-form', {
+            duration: 1,
+            y: 30,
+            opacity: 0,
+            stagger: 0.2,
+            ease: 'power3.out',
+            delay: 0.3
+        });
+
+        gsap.from('.map-container', {
+            duration: 1,
+            y: 30,
+            opacity: 0,
+            ease: 'power3.out',
+            delay: 0.6
+        });
+    </script>
+</body>
+</html> 

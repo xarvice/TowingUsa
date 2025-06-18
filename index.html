@@ -1,0 +1,4038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Towing Services - Towman USA</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="styles/main.css">
+  <style>
+    /* Root Variables */
+    :root {
+      --bg: #000;
+      --text: #00bfff;
+      --card: #111;
+      --subtext: #aaa;
+      --hover-blue: #0074d9;
+      --hover-blue-light: #3399ff;
+      --accent: #ff4136;
+      --success: #2ecc40;
+      --warning: #ffdc00;
+      --modal-bg: rgba(0, 0, 0, 0.8);
+      --input-bg: #222;
+      --input-border: #444;
+    }
+
+    /* Light Theme */
+    body.light {
+      --bg: #fff;
+      --text: #111;
+      --card: #f0f0f0;
+      --subtext: #555;
+      --hover-blue: #0056b3;
+      --hover-blue-light: #3399ff;
+      --modal-bg: rgba(255, 255, 255, 0.95);
+      --input-bg: #fff;
+      --input-border: #ddd;
+    }
+
+    /* Base Styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      margin: 0;
+      padding: 0;
+      color: var(--text);
+      transition: background 0.4s, color 0.4s;
+      line-height: 1.6;
+    }
+
+    /* Emergency Banner */
+    .emergency-banner {
+      background: var(--accent);
+      color: white;
+      text-align: center;
+      padding: 15px;
+      position: relative;
+      overflow: hidden;
+      z-index: 1000;
+    }
+
+    .emergency-banner::after {
+      content: "24/7";
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      font-weight: bold;
+      animation: pulse 2s infinite;
+    }
+
+    .emergency-phone {
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+      display: inline-block;
+      padding: 5px 15px;
+      border-radius: 25px;
+      background: rgba(255,255,255,0.2);
+      transition: all 0.3s ease;
+    }
+
+    .emergency-phone:hover {
+      background: rgba(255,255,255,0.3);
+      transform: scale(1.05);
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: var(--card);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar .logo {
+      font-size: 1.5rem;
+      color: var(--text);
+      font-weight: bold;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .navbar .logo:hover {
+      color: var(--hover-blue);
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: var(--subtext);
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s ease;
+      padding: 5px 0;
+    }
+
+    .nav-links li a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 0%;
+      height: 3px;
+      background-color: var(--hover-blue);
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .nav-links li a:hover::after,
+    .nav-links li a.active::after {
+      width: 100%;
+    }
+
+    .nav-links li a:hover,
+    .nav-links li a.active {
+      color: var(--hover-blue);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .theme-toggle {
+      position: relative;
+      width: 60px;
+      height: 30px;
+      border-radius: 15px;
+      background: var(--card);
+      cursor: pointer;
+      margin-left: 20px;
+      border: 2px solid var(--hover-blue);
+    }
+
+    .theme-toggle::after {
+      content: "🌙";
+      position: absolute;
+      top: 50%;
+      left: 5px;
+      transform: translateY(-50%);
+      font-size: 18px;
+      transition: all 0.3s ease;
+    }
+
+    body.light .theme-toggle::after {
+      content: "☀️";
+      left: 35px;
+    }
+
+    /* Phone number styles */
+    .phone-number {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .phone-number i {
+      animation: pulse 2s infinite;
+    }
+
+    .phone-number:hover {
+      transform: scale(1.05);
+      color: var(--warning);
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slider-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slider-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out, transform 8s ease-in-out;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transform: scale(1.1);
+    }
+
+    .slider-image.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .slider-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.4), rgba(0,0,0,0.7));
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+      font-family: 'Oswald', sans-serif;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      line-height: 1.1;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      letter-spacing: 2px;
+    }
+
+    .hero h1 span {
+      color: var(--hover-blue);
+      display: block;
+      font-size: 0.7em;
+    }
+
+    .hero p {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(1rem, 3vw, 1.4rem);
+      margin-bottom: 30px;
+      color: rgba(255,255,255,0.9);
+      font-weight: 300;
+      line-height: 1.6;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero .cta-button {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      padding: 20px 40px;
+      border-radius: 50px;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 1px;
+      background: var(--hover-blue);
+      color: white;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      animation: pulse 2s infinite;
+    }
+
+    .hero .cta-button:hover {
+      background: transparent;
+      border-color: var(--hover-blue);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,123,255,0.3);
+    }
+
+    .slider-nav {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 15px;
+      z-index: 2;
+    }
+
+    .slider-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .slider-dot.active {
+      background: var(--hover-blue);
+      transform: scale(1.2);
+      border-color: white;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      color: white;
+      text-align: center;
+      animation: bounce 2s infinite;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    .scroll-indicator:hover {
+      opacity: 1;
+    }
+
+    .scroll-indicator span {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        height: 80vh;
+      }
+      
+      .hero-content {
+        padding: 0 15px;
+      }
+    }
+
+    /* Services Section */
+    .services {
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 50px;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 100px;
+      height: 4px;
+      background: var(--hover-blue);
+      margin: 20px auto;
+      border-radius: 2px;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .service-card {
+      background: var(--card);
+      border-radius: 15px;
+      padding: 30px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 280px;
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--hover-blue);
+      box-shadow: 0 10px 20px rgba(0,123,255,0.3);
+    }
+
+    .service-card i {
+      font-size: 3rem;
+      color: var(--hover-blue);
+      margin-bottom: 20px;
+    }
+
+    .service-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: var(--text);
+    }
+
+    .service-card p {
+      color: var(--subtext);
+      line-height: 1.6;
+    }
+
+    .learn-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--hover-blue);
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .learn-more i {
+      transition: transform 0.3s ease;
+    }
+
+    .learn-more:hover {
+      color: var(--hover-blue-light);
+    }
+
+    .learn-more:hover i {
+      transform: translateX(5px);
+    }
+
+    /* Pricing Section */
+    .pricing-section {
+      padding: 80px 20px;
+      background: var(--card);
+      position: relative;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .price-card {
+      background: var(--bg);
+      border-radius: 15px;
+      padding: 30px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .price-card.popular {
+      transform: scale(1.05);
+    }
+
+    .price-card.popular::before {
+      content: "Most Popular";
+      position: absolute;
+      top: 20px;
+      right: -35px;
+      background: var(--accent);
+      color: white;
+      padding: 8px 40px;
+      transform: rotate(45deg);
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .price-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,123,255,0.3);
+    }
+
+    .price-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .price-actions .cta-button {
+      flex: 1;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .payment-btn {
+      background: var(--success) !important;
+    }
+
+    .payment-btn:hover {
+      background: var(--hover-blue-light) !important;
+    }
+
+    .price-card h3 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .price-card .price {
+      font-size: 48px;
+      color: var(--hover-blue);
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .price-card .price small {
+      font-size: 16px;
+      color: var(--subtext);
+    }
+
+    .price-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+    }
+
+    .price-card ul li {
+      padding: 10px 0;
+      color: var(--subtext);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .price-card ul li:last-child {
+      border-bottom: none;
+    }
+
+    /* Calculator Section */
+    .calculator {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 30px;
+      background: var(--card);
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    .calculator h3 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: var(--text);
+    }
+
+    .calculator select,
+    .calculator input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    .calculator button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 8px;
+      background: var(--hover-blue);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .calculator button:hover {
+      background: var(--hover-blue-light);
+      transform: translateY(-2px);
+    }
+
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      background: var(--bg);
+      border-radius: 8px;
+      text-align: center;
+      font-size: 24px;
+      color: var(--text);
+      font-weight: bold;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--card);
+      padding: 60px 0 20px;
+      margin-top: 80px;
+      color: var(--text);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      padding: 0 20px;
+    }
+
+    .footer-section h4 {
+      color: var(--text);
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      position: relative;
+    }
+
+    .footer-section h4::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 3px;
+      background: var(--hover-blue);
+      margin-top: 10px;
+      border-radius: 2px;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 12px;
+    }
+
+    .footer-links a {
+      color: var(--subtext);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      font-size: 0.95rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--hover-blue);
+      padding-left: 5px;
+    }
+
+    .locations-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .contact-details {
+      margin-bottom: 20px;
+    }
+
+    .contact-details p {
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--subtext);
+    }
+
+    .contact-details i {
+      color: var(--hover-blue);
+      width: 20px;
+    }
+
+    .contact-details a {
+      color: var(--subtext);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-details a:hover {
+      color: var(--hover-blue);
+    }
+
+    address {
+      color: var(--subtext);
+      font-style: normal;
+      margin-left: 30px;
+      line-height: 1.6;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-links a {
+      color: var(--subtext);
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: var(--hover-blue);
+      transform: translateY(-3px);
+    }
+
+    .payment-icons {
+      display: flex;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .payment-icons i {
+      font-size: 2rem;
+      color: var(--subtext);
+    }
+
+    .certifications {
+      display: flex;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .certifications img {
+      height: 40px;
+      width: auto;
+      filter: grayscale(1);
+      opacity: 0.7;
+      transition: all 0.3s ease;
+    }
+
+    .certifications img:hover {
+      filter: grayscale(0);
+      opacity: 1;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 40px auto 0;
+      padding: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+    }
+
+    .footer-nav {
+      margin-bottom: 20px;
+    }
+
+    .footer-nav a {
+      color: var(--subtext);
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-nav a:hover {
+      color: var(--hover-blue);
+    }
+
+    .copyright {
+      color: var(--subtext);
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+
+    .disclaimer {
+      color: var(--subtext);
+      font-size: 0.8rem;
+      max-width: 800px;
+      margin: 0 auto;
+      opacity: 0.8;
+    }
+
+    @media (max-width: 768px) {
+      .footer-content {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
+
+      .locations-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-nav a {
+        display: block;
+        margin: 10px 0;
+      }
+
+      .payment-icons {
+        justify-content: center;
+      }
+
+      .certifications {
+        justify-content: center;
+      }
+    }
+
+    /* Animations */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        padding: 1rem;
+      }
+
+      .nav-links {
+        margin-top: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hero {
+        height: 70vh;
+      }
+
+      .price-card.popular {
+        transform: scale(1);
+      }
+
+      .nav-right {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .theme-toggle {
+        margin: 15px 0;
+      }
+
+      .promo-banner {
+        height: 400px;
+      }
+
+      .promo-content {
+        padding: 20px;
+        margin: 0 20px;
+      }
+    }
+
+    /* Promotional Banners */
+    .promo-banner {
+      position: relative;
+      height: 500px;
+      overflow: hidden;
+      margin: 40px 0;
+    }
+
+    .promo-slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .promo-slide::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+
+    .promo-slide.active {
+      opacity: 1;
+    }
+
+    .promo-content {
+      position: relative;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 40px;
+      border-radius: 20px;
+      max-width: 600px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    .promo-content h2 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: var(--warning);
+    }
+
+    .promo-content p {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    .promo-btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background: var(--warning);
+      color: black;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .promo-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px var(--warning);
+    }
+
+    /* Login/Signup Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--modal-bg);
+      z-index: 1000;
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-content {
+      position: relative;
+      background: var(--bg);
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transform: translateY(-100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      border: 1px solid var(--input-border);
+    }
+
+    .modal.active .modal-content {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--subtext);
+      transition: color 0.3s ease;
+    }
+
+    .close-modal:hover {
+      color: var(--accent);
+    }
+
+    .auth-form h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--text);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--input-border);
+      border-radius: 8px;
+      background: var(--input-bg);
+      color: var(--text);
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus {
+      border-color: var(--hover-blue);
+      box-shadow: 0 0 10px rgba(0, 123, 255, 0.2);
+      outline: none;
+    }
+
+    .auth-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--hover-blue);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .auth-btn:hover {
+      background: var(--hover-blue-light);
+      transform: translateY(-2px);
+    }
+
+    .auth-switch {
+      text-align: center;
+      margin-top: 20px;
+      color: var(--subtext);
+    }
+
+    .auth-switch a {
+      color: var(--hover-blue);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .auth-switch a:hover {
+      text-decoration: underline;
+    }
+
+    /* Social Login Buttons */
+    .social-login {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin: 0 10px;
+      border-radius: 50%;
+      background: var(--card);
+      color: var(--text);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .social-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .social-btn.facebook:hover {
+      background: #1877f2;
+      color: white;
+    }
+
+    .social-btn.google:hover {
+      background: #db4437;
+      color: white;
+    }
+
+    .social-btn.apple:hover {
+      background: #000;
+      color: white;
+    }
+
+    /* About Section Styles */
+    .about-section {
+      padding: 80px 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .about-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .about-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .about-subtitle {
+      color: var(--hover-blue);
+      font-size: 1.2rem;
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    .about-card {
+      background: var(--card);
+      padding: 30px;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .about-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--hover-blue);
+      box-shadow: 0 10px 20px rgba(0,123,255,0.1);
+    }
+
+    .about-icon {
+      font-size: 2.5rem;
+      color: var(--hover-blue);
+      margin-bottom: 20px;
+    }
+
+    .about-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .about-card p {
+      color: var(--subtext);
+      line-height: 1.6;
+      font-size: 1.1rem;
+    }
+
+    .about-features {
+      margin: 60px 0;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 20px;
+      background: var(--card);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .feature-item:hover {
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(0,123,255,0.1);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      color: var(--hover-blue);
+      min-width: 50px;
+    }
+
+    .feature-content h4 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .feature-content p {
+      color: var(--subtext);
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      margin: 60px 0;
+      text-align: center;
+    }
+
+    .stat-item {
+      padding: 30px;
+      background: var(--card);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .stat-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,123,255,0.1);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--hover-blue);
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      color: var(--subtext);
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    .about-cta {
+      text-align: center;
+      padding: 60px 20px;
+      background: var(--card);
+      border-radius: 20px;
+      margin-top: 60px;
+    }
+
+    .about-cta h3 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .about-cta p {
+      color: var(--subtext);
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .about-cta .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--hover-blue);
+      color: white;
+      padding: 15px 30px;
+      border-radius: 30px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .about-cta .cta-button:hover {
+      background: var(--hover-blue-light);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .about-section {
+        padding: 60px 0;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stat-number {
+        font-size: 2rem;
+      }
+
+      .about-cta h3 {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .about-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .about-cta .cta-button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    /* Add Chat Bot Styles */
+    .chat-widget {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .chat-button {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: var(--hover-blue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .chat-button:hover {
+        transform: scale(1.1);
+        background: var(--hover-blue-light);
+    }
+
+    .chat-button i {
+        color: white;
+        font-size: 24px;
+    }
+
+    .chat-container {
+        position: fixed;
+        bottom: 90px;
+        right: 20px;
+        width: 350px;
+        height: 500px;
+        background: var(--card);
+        border-radius: 15px;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+        border: 1px solid rgba(0, 191, 255, 0.1);
+    }
+
+    .chat-container.active {
+        display: flex;
+    }
+
+    .chat-header {
+        background: var(--hover-blue);
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .chat-header h3 {
+        color: white;
+        margin: 0;
+        font-size: 18px;
+    }
+
+    .chat-close {
+        color: white;
+        cursor: pointer;
+        font-size: 20px;
+        transition: transform 0.3s ease;
+    }
+
+    .chat-close:hover {
+        transform: rotate(90deg);
+    }
+
+    .chat-messages {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .chat-message {
+        max-width: 80%;
+        padding: 12px 15px;
+        border-radius: 15px;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    .chat-message.bot {
+        background: rgba(0, 123, 255, 0.1);
+        color: var(--text);
+        align-self: flex-start;
+        border-bottom-left-radius: 5px;
+    }
+
+    .chat-message.user {
+        background: var(--hover-blue);
+        color: white;
+        align-self: flex-end;
+        border-bottom-right-radius: 5px;
+    }
+
+    .chat-input-container {
+        padding: 15px;
+        background: var(--bg);
+        display: flex;
+        gap: 10px;
+        border-top: 1px solid rgba(0, 191, 255, 0.1);
+    }
+
+    .chat-input {
+        flex: 1;
+        padding: 12px;
+        border: 1px solid rgba(0, 191, 255, 0.2);
+        border-radius: 25px;
+        background: var(--card);
+        color: var(--text);
+        font-size: 14px;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    .chat-input:focus {
+        border-color: var(--hover-blue);
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    }
+
+    .chat-send {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--hover-blue);
+        border: none;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .chat-send:hover {
+        background: var(--hover-blue-light);
+        transform: scale(1.1);
+    }
+
+    .chat-send i {
+        font-size: 16px;
+    }
+
+    @media (max-width: 480px) {
+        .chat-container {
+            width: calc(100% - 40px);
+            height: calc(100% - 120px);
+        }
+    }
+
+    /* Popup Styles */
+    .popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .popup-container {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        max-width: 500px;
+        width: 90%;
+        position: relative;
+        text-align: center;
+        transform: scale(0.95);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .popup-overlay[style*="visibility: visible"] .popup-container {
+        transform: scale(1);
+    }
+
+    .popup-logo {
+        width: 200px;
+        height: auto;
+        margin: 0 auto 20px;
+        animation: pulse 2s infinite;
+    }
+
+    .popup-content {
+        margin: 15px 0;
+        color: #333;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    .popup-content strong {
+        color: #ff0000;
+        font-size: 20px;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .popup-phone {
+        color: #ff0000;
+        font-size: 24px;
+        font-weight: bold;
+        margin: 20px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        text-decoration: none;
+        padding: 15px;
+        background: #fff3f3;
+        border-radius: 50px;
+        border: 2px solid #ff0000;
+        transition: all 0.3s ease;
+        animation: highlight 1.5s infinite;
+    }
+
+    .popup-phone:hover {
+        background: #ff0000;
+        color: white;
+        transform: scale(1.05);
+    }
+
+    .popup-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #333;
+        background: none;
+        border: none;
+        padding: 5px;
+        transition: all 0.3s ease;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .popup-close:hover {
+        color: #ff0000;
+        transform: rotate(90deg);
+    }
+
+    @keyframes highlight {
+        0% {
+            box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4);
+        }
+        70% {
+            box-shadow: 0 0 0 15px rgba(255, 0, 0, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .popup-container {
+            padding: 20px;
+            margin: 15px;
+        }
+
+        .popup-logo {
+            width: 150px;
+        }
+
+        .popup-phone {
+            font-size: 20px;
+            padding: 12px;
+        }
+    }
+
+    /* Testimonials Section Styles */
+    .testimonials-section {
+        padding: 80px 0;
+        background: var(--bg);
+        overflow: hidden;
+    }
+
+    .testimonials-section .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .testimonials-subtitle {
+        text-align: center;
+        color: var(--subtext);
+        font-size: 1.2rem;
+        margin-bottom: 50px;
+    }
+
+    /* Success Metrics Styles */
+    .success-metrics {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+        margin-bottom: 60px;
+    }
+
+    .metric-item {
+        text-align: center;
+        padding: 30px;
+        background: var(--card);
+        border-radius: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .metric-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 30px rgba(0,123,255,0.2);
+    }
+
+    .metric-icon {
+        font-size: 2.5rem;
+        color: var(--hover-blue);
+        margin-bottom: 15px;
+    }
+
+    .metric-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 10px;
+    }
+
+    .metric-label {
+        color: var(--subtext);
+        font-size: 1.1rem;
+    }
+
+    /* Testimonials Slider Styles */
+    .testimonials-slider {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto 30px;
+        overflow: hidden;
+    }
+
+    .testimonial-card {
+        background: var(--card);
+        padding: 30px;
+        border-radius: 15px;
+        margin: 20px;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        transition: all 0.5s ease;
+        transform: translateX(100%);
+    }
+
+    .testimonial-card.active {
+        opacity: 1;
+        transform: translateX(0);
+        position: relative;
+    }
+
+    .testimonial-content {
+        position: relative;
+        padding-left: 40px;
+        margin-bottom: 20px;
+    }
+
+    .testimonial-content i {
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-size: 2rem;
+        color: var(--hover-blue);
+        opacity: 0.5;
+    }
+
+    .testimonial-content p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: var(--text);
+    }
+
+    .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .testimonial-author img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .author-info h4 {
+        margin: 0;
+        color: var(--text);
+        font-size: 1.1rem;
+    }
+
+    .rating {
+        color: #ffd700;
+        margin: 5px 0;
+    }
+
+    .author-info p {
+        margin: 0;
+        color: var(--subtext);
+        font-size: 0.9rem;
+    }
+
+    /* Testimonial Navigation */
+    .testimonial-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .prev-testimonial,
+    .next-testimonial {
+        background: var(--card);
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        color: var(--text);
+        transition: all 0.3s ease;
+    }
+
+    .prev-testimonial:hover,
+    .next-testimonial:hover {
+        background: var(--hover-blue);
+        color: white;
+    }
+
+    .testimonial-dots {
+        display: flex;
+        gap: 8px;
+    }
+
+    .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--subtext);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .dot.active {
+        background: var(--hover-blue);
+        transform: scale(1.2);
+    }
+
+    /* Enhanced Feedback Form Styles */
+    .feedback-form-container {
+      max-width: 800px;
+      margin: 60px auto;
+      padding: 40px;
+      background: var(--card);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feedback-form-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,123,255,0.2);
+    }
+
+    .feedback-form-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--hover-blue), transparent);
+      transition: 0.5s;
+    }
+
+    .feedback-form-container:hover::before {
+      left: 100%;
+    }
+
+    .feedback-header {
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .feedback-header h3 {
+      font-size: 2rem;
+      color: var(--text);
+      margin-bottom: 10px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .feedback-header h3::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 3px;
+      background: var(--hover-blue);
+      transition: width 0.3s ease;
+    }
+
+    .feedback-form-container:hover .feedback-header h3::after {
+      width: 100px;
+    }
+
+    .feedback-subtitle {
+      color: var(--subtext);
+      font-size: 1.1rem;
+      opacity: 0.8;
+      transition: all 0.3s ease;
+    }
+
+    .feedback-form-container:hover .feedback-subtitle {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+
+    .form-group.hover-effect {
+      margin-bottom: 25px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .form-group.hover-effect label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .form-group.hover-effect label i {
+      color: var(--hover-blue);
+      transition: all 0.3s ease;
+    }
+
+    .form-group.hover-effect:hover label {
+      transform: translateX(5px);
+    }
+
+    .form-group.hover-effect:hover label i {
+      transform: scale(1.2);
+    }
+
+    .form-group.hover-effect input,
+    .form-group.hover-effect textarea {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid transparent;
+      border-radius: 10px;
+      background: var(--input-bg);
+      color: var(--text);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .form-group.hover-effect input:focus,
+    .form-group.hover-effect textarea:focus {
+      border-color: var(--hover-blue);
+      box-shadow: 0 5px 15px rgba(0,123,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    .form-group.hover-effect input:hover,
+    .form-group.hover-effect textarea:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,123,255,0.1);
+    }
+
+    /* Enhanced Star Rating */
+    .star-rating {
+      display: flex;
+      gap: 10px;
+      font-size: 1.8rem;
+      margin: 15px 0;
+      justify-content: center;
+    }
+
+    .star-rating i {
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #ffd700;
+      opacity: 0.5;
+    }
+
+    .star-rating i:hover {
+      transform: rotate(360deg) scale(1.2);
+      opacity: 1;
+    }
+
+    .star-rating i.selected {
+      opacity: 1;
+      animation: starPulse 0.5s ease;
+    }
+
+    @keyframes starPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3) rotate(180deg); }
+      100% { transform: scale(1) rotate(360deg); }
+    }
+
+    /* Submit Button Enhancement */
+    .submit-feedback {
+      background: linear-gradient(45deg, var(--hover-blue), var(--hover-blue-light));
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-feedback::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: 0.5s;
+    }
+
+    .submit-feedback:hover::before {
+      left: 100%;
+    }
+
+    .submit-feedback:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,123,255,0.3);
+    }
+
+    .submit-feedback:hover i {
+      animation: flyPlane 1s infinite;
+    }
+
+    @keyframes flyPlane {
+      0% { transform: translateX(0) rotate(0); }
+      50% { transform: translateX(5px) rotate(10deg); }
+      100% { transform: translateX(0) rotate(0); }
+    }
+
+    /* Form Row Enhancement */
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    @media (max-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .feedback-form-container {
+        padding: 30px 20px;
+      }
+    }
+
+    /* Input Highlight Animation */
+    .input-highlight {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--hover-blue);
+      transition: width 0.3s ease;
+    }
+
+    .form-group.hover-effect:hover .input-highlight {
+      width: 100%;
+    }
+
+    /* Success Message Animation */
+    .feedback-success {
+      text-align: center;
+      padding: 40px 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+
+    .feedback-success.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .feedback-success i {
+      font-size: 4rem;
+      color: var(--success);
+      margin-bottom: 20px;
+      animation: successPop 0.5s ease;
+    }
+
+    @keyframes successPop {
+      0% { transform: scale(0); }
+      70% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    /* Project Completion Section Styles */
+    .project-completion-section {
+        padding: 80px 0;
+        background: var(--bg);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .project-completion-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--hover-blue), transparent);
+        animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
+
+    .project-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .stat-box {
+        text-align: center;
+        padding: 40px 30px;
+        border-radius: 20px;
+        background: var(--card);
+        transition: all 0.5s ease;
+        position: relative;
+        cursor: pointer;
+        overflow: hidden;
+    }
+
+    .stat-box::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(0,123,255,0.1), transparent);
+        transition: 0.5s;
+    }
+
+    .stat-box:hover::before {
+        left: 100%;
+    }
+
+    .stat-box:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,123,255,0.2);
+    }
+
+    .stat-box:hover .stat-circle {
+        transform: scale(1.1);
+    }
+
+    .stat-circle {
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        background: var(--bg);
+        margin: 0 auto 20px;
+        position: relative;
+        transition: all 0.5s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .stat-circle::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 4px solid transparent;
+        border-top-color: var(--hover-blue);
+        animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .stat-content {
+        position: relative;
+        z-index: 1;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--hover-blue);
+        text-shadow: 0 2px 10px rgba(0,123,255,0.2);
+        transition: all 0.3s ease;
+    }
+
+    .stat-box:hover .stat-content {
+        transform: scale(1.1);
+    }
+
+    .stat-symbol {
+        font-size: 1.2rem;
+        color: var(--subtext);
+        margin-top: 5px;
+        opacity: 0.8;
+    }
+
+    .stat-label {
+        font-size: 1.2rem;
+        color: var(--text);
+        margin-top: 20px;
+        font-weight: 600;
+    }
+
+    .stat-sublabel {
+        color: var(--subtext);
+        font-size: 0.9rem;
+        margin-top: 5px;
+    }
+
+    @keyframes numberChange {
+        0% { transform: translateY(0); opacity: 1; }
+        50% { transform: translateY(-20px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+    }
+
+    .stat-number.updating {
+        animation: numberChange 0.5s ease;
+    }
+
+    .refresh-stats {
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
+    }
+
+    .refresh-button {
+        background: var(--hover-blue);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+    }
+
+    .refresh-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0,123,255,0.4);
+    }
+
+    .refresh-button i {
+        transition: transform 0.5s ease;
+    }
+
+    .refresh-button:hover i {
+        transform: rotate(180deg);
+    }
+
+    @media (max-width: 768px) {
+        .project-stats {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .stat-circle {
+            width: 120px;
+            height: 120px;
+        }
+        
+        .stat-content {
+            font-size: 2rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .project-stats {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Emergency Call Widget Styles */
+    .emergency-call-widget {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 1000;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .emergency-call-button {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: #ff4136;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(255, 65, 54, 0.4);
+        transition: all 0.3s ease;
+        animation: pulse-red 2s infinite;
+    }
+
+    @keyframes pulse-red {
+        0% {
+            transform: scale(1);
+            box-shadow: 0 0 0 0 rgba(255, 65, 54, 0.7);
+        }
+        70% {
+            transform: scale(1.1);
+            box-shadow: 0 0 0 15px rgba(255, 65, 54, 0);
+        }
+        100% {
+            transform: scale(1);
+            box-shadow: 0 0 0 0 rgba(255, 65, 54, 0);
+        }
+    }
+
+    .emergency-call-button:hover {
+        transform: scale(1.1);
+        background: #ff1a1a;
+    }
+
+    .emergency-call-button i {
+        color: white;
+        font-size: 24px;
+        animation: shake 1.5s infinite;
+    }
+
+    @keyframes shake {
+        0%, 100% { transform: rotate(0deg); }
+        20%, 60% { transform: rotate(-10deg); }
+        40%, 80% { transform: rotate(10deg); }
+    }
+
+    .emergency-container {
+        position: fixed;
+        bottom: 90px;
+        left: 20px;
+        width: 300px;
+        background: #ff4136;
+        border-radius: 15px;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+        animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+        from { transform: translateX(-100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+
+    .emergency-container.active {
+        display: flex;
+    }
+
+    .emergency-header {
+        background: #cc0000;
+        padding: 15px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .emergency-header h3 {
+        color: white;
+        margin: 0;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .emergency-header h3 i {
+        animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+
+    .emergency-close {
+        color: white;
+        cursor: pointer;
+        font-size: 20px;
+        transition: transform 0.3s ease;
+    }
+
+    .emergency-close:hover {
+        transform: rotate(90deg);
+    }
+
+    .emergency-content {
+        padding: 20px;
+        text-align: center;
+        color: white;
+    }
+
+    .emergency-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .emergency-description {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+        opacity: 0.9;
+    }
+
+    .emergency-call-now {
+        background: white;
+        color: #ff4136;
+        text-decoration: none;
+        padding: 12px 25px;
+        border-radius: 25px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .emergency-call-now:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        background: #f8f8f8;
+    }
+
+    .emergency-call-now i {
+        animation: bounce 1s infinite;
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+    }
+
+    @media (max-width: 480px) {
+        .emergency-container {
+            width: calc(100% - 40px);
+            left: 20px;
+        }
+    }
+
+    .hidden {
+        display: none !important;
+    }
+
+    .emergency-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="emergency-banner">
+    <span>Emergency Towing? Call Now: </span>
+    <a href="tel:1-888-758-2424" class="emergency-phone pulse">
+      <i class="fas fa-phone-alt"></i>
+      1-888-758-2424
+    </a>
+  </div>
+
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">TOWMAN USA</a>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#calculator">Calculator</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="#" onclick="showModal('login')">Login</a></li>
+          <li><a href="#" onclick="showModal('signup')">Sign Up</a></li>
+        </ul>
+        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme"></div>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="slider-container" id="imageSlider">
+      <div class="slider-image active" style="background-image: url('carimages/car1.webp')"></div>
+      <div class="slider-image" style="background-image: url('carimages/car-black-tow-truck.jpg')"></div>
+      <div class="slider-image" style="background-image: url('carimages/multi_car.webp')"></div>
+      <div class="slider-image" style="background-image: url('carimages/car-8196862_1280.jpg')"></div>
+      <div class="slider-image" style="background-image: url('carimages/istockphoto-1412505525-612x612.jpg')"></div>
+      <div class="slider-image" style="background-image: url('carimages/bike.webp')"></div>
+      <div class="slider-image" style="background-image: url('carimages/bus.jpg')"></div>
+      <div class="slider-image" style="background-image: url('carimages/410bca9b0cb04f5ec262719652cac67f.jpg')"></div>
+    </div>
+    <div class="slider-overlay"></div>
+    <div class="hero-content">
+      <h1 class="fade-up">
+        Professional Towing Services
+        <span>24/7 Emergency Response</span>
+      </h1>
+      <p class="fade-up">
+        Your trusted partner for fast, reliable, and professional towing services. 
+        We're here when you need us most, providing immediate assistance across Aurora and surrounding areas.
+      </p>
+      <a href="tel:720-737-9118" class="cta-button fade-up">
+        <i class="fas fa-phone-alt"></i>
+        Get Emergency Help Now
+      </a>
+    </div>
+    <div class="slider-nav" id="sliderNav"></div>
+    <div class="scroll-indicator" onclick="scrollToServices()">
+      <span>Scroll Down</span>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about-section">
+    <div class="about-container">
+      <div class="about-header">
+        <h2 class="section-title fade-up">About Action Towing</h2>
+        <div class="about-subtitle fade-up">Your Trusted Partner in Professional Towing Services Since 2008</div>
+      </div>
+
+      <div class="about-grid">
+        <!-- Company Story -->
+        <div class="about-card fade-up">
+          <div class="about-icon">
+            <i class="fas fa-building"></i>
+          </div>
+          <h3>Our Story</h3>
+          <p>Founded in 2008, Action Towing has grown from a single truck operation to one of the most trusted names in towing services across the region. With over 15 years of experience, we've built our reputation on reliability, professionalism, and customer satisfaction.</p>
+        </div>
+
+        <!-- Mission -->
+        <div class="about-card fade-up">
+          <div class="about-icon">
+            <i class="fas fa-star"></i>
+          </div>
+          <h3>Our Mission</h3>
+          <p>We are committed to providing fast, reliable, and professional towing services 24/7. Our mission is to ensure safety and peace of mind for our clients during their most stressful moments on the road.</p>
+        </div>
+
+        <!-- Values -->
+        <div class="about-card fade-up">
+          <div class="about-icon">
+            <i class="fas fa-heart"></i>
+          </div>
+          <h3>Our Values</h3>
+          <p>Integrity, professionalism, and customer care are at the heart of everything we do. We believe in transparent pricing, honest service, and treating every customer with the respect they deserve.</p>
+        </div>
+      </div>
+
+      <div class="about-features">
+        <div class="feature-grid">
+          <!-- Experience -->
+          <div class="feature-item fade-up">
+            <div class="feature-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="feature-content">
+              <h4>15+ Years Experience</h4>
+              <p>Serving our community with dedication and expertise since 2008.</p>
+            </div>
+          </div>
+
+          <!-- Team -->
+          <div class="feature-item fade-up">
+            <div class="feature-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="feature-content">
+              <h4>Professional Team</h4>
+              <p>Certified technicians with extensive training and experience.</p>
+            </div>
+          </div>
+
+          <!-- Coverage -->
+          <div class="feature-item fade-up">
+            <div class="feature-icon">
+              <i class="fas fa-map-marked-alt"></i>
+            </div>
+            <div class="feature-content">
+              <h4>Wide Coverage Area</h4>
+              <p>Serving Aurora and surrounding areas with quick response times.</p>
+            </div>
+          </div>
+
+          <!-- Equipment -->
+          <div class="feature-item fade-up">
+            <div class="feature-icon">
+              <i class="fas fa-truck"></i>
+            </div>
+            <div class="feature-content">
+              <h4>Modern Equipment</h4>
+              <p>State-of-the-art towing vehicles and recovery equipment.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-stats">
+        <div class="stat-item fade-up">
+          <div class="stat-number">15k+</div>
+          <div class="stat-label">Satisfied Customers</div>
+        </div>
+        <div class="stat-item fade-up">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Emergency Service</div>
+        </div>
+        <div class="stat-item fade-up">
+          <div class="stat-number">30min</div>
+          <div class="stat-label">Average Response Time</div>
+        </div>
+        <div class="stat-item fade-up">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Customer Satisfaction</div>
+        </div>
+      </div>
+
+      <div class="about-cta fade-up">
+        <h3>Need Emergency Towing Service?</h3>
+        <p>We're available 24/7 to help you with any towing or roadside assistance needs.</p>
+        <a href="tel:720-737-9118" class="cta-button">
+          <i class="fas fa-phone-alt"></i>
+          Call Now: 720-737-9118
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="services">
+    <h2 class="section-title fade-up">Our Services</h2>
+    <div class="card-container">
+      <div class="service-card fade-up">
+        <i class="fas fa-car"></i>
+        <h3>Car Towing</h3>
+        <p>Professional car towing with state-of-the-art equipment. Fast response for all vehicle types including luxury and sports cars.</p>
+        <a href="services/car-towing.html" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="service-card fade-up">
+        <i class="fas fa-gas-pump"></i>
+        <h3>Gas Delivery</h3>
+        <p>Out of fuel? We deliver gas to your location 24/7. Quick and reliable fuel delivery service.</p>
+        <a href="services/gas-delivery.html" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="service-card fade-up">
+        <i class="fas fa-truck"></i>
+        <h3>Heavy Duty Towing</h3>
+        <p>Specialized towing for trucks, RVs, and commercial vehicles. Expert handling of oversized loads.</p>
+        <a href="services/heavy-duty-towing.html" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="service-card fade-up">
+        <i class="fas fa-warehouse"></i>
+        <h3>Storage Services</h3>
+        <p>Secure vehicle storage solutions for short and long-term needs. Protected and monitored facilities.</p>
+        <a href="services/storage.html" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="service-card fade-up">
+        <i class="fas fa-wrench"></i>
+        <h3>Winch Out Service</h3>
+        <p>Professional winching services to recover stuck vehicles. Expert extraction from any situation.</p>
+        <a href="services/winch-out.html" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="service-card fade-up">
+        <i class="fas fa-key"></i>
+        <h3>Lockout Services</h3>
+        <p>Locked out of your vehicle? Our professional locksmiths provide quick access solutions.</p>
+        <a href="services/lockout.html" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="service-card fade-up">
+        <i class="fas fa-car-battery"></i>
+        <h3>Jump Start</h3>
+        <p>Dead battery? Get instant power with our professional jump start service available 24/7.</p>
+        <a href="services/jumpstart.html" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="service-card fade-up">
+        <i class="fas fa-road"></i>
+        <h3>Long Distance Towing</h3>
+        <p>Professional long-distance towing services for all vehicle types. Safe and reliable transport across states.</p>
+        <a href="services/long-distance.html" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="pricing-section">
+    <h2 class="section-title fade-up">Transparent Pricing</h2>
+    <div class="pricing-grid">
+      <div class="price-card fade-up">
+        <h3>Local Towing</h3>
+        <div class="price">$75<small>/service</small></div>
+        <ul>
+          <li>Up to 5 miles towing</li>
+          <li>Basic roadside assistance</li>
+          <li>24/7 availability</li>
+          <li>Jump start service</li>
+          <li>Tire change assistance</li>
+          <li>Lockout service</li>
+        </ul>
+        <div class="price-actions">
+          <a href="tel:1-888-758-2424" class="cta-button">Call Now</a>
+          <a href="payment.html?plan=basic&amount=75" class="cta-button payment-btn">Pay Online</a>
+        </div>
+      </div>
+      <div class="price-card popular fade-up">
+        <h3>Premium Service</h3>
+        <div class="price">$95<small>/service</small></div>
+        <ul>
+          <li>Up to 15 miles towing</li>
+          <li>Priority dispatch</li>
+          <li>Full roadside assistance</li>
+          <li>Winch out service</li>
+          <li>Fuel delivery included</li>
+          <li>Battery service</li>
+          <li>Accident recovery</li>
+        </ul>
+        <div class="price-actions">
+          <a href="tel:1-888-758-2424" class="cta-button">Call Now</a>
+          <a href="payment.html?plan=standard&amount=95" class="cta-button payment-btn">Pay Online</a>
+        </div>
+      </div>
+      <div class="price-card fade-up">
+        <h3>Heavy Duty & Long Distance</h3>
+        <div class="price">Custom<small>/service</small></div>
+        <ul>
+          <li>Heavy vehicle towing</li>
+          <li>Long distance transport</li>
+          <li>Equipment moving</li>
+          <li>Interstate service</li>
+          <li>Storage solutions</li>
+          <li>Commercial accounts</li>
+          <li>24/7 dispatch</li>
+        </ul>
+        <div class="price-actions">
+          <a href="tel:1-888-758-2424" class="cta-button">Get Quote</a>
+          <a href="payment.html?plan=premium&amount=custom" class="cta-button payment-btn">Request Service</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="calculator" class="calculator fade-up">
+    <h3>Towing Cost Calculator</h3>
+    <select id="service-type">
+      <option value="">Select Service Type</option>
+      <option value="basic">Basic Tow</option>
+      <option value="standard">Standard Tow</option>
+      <option value="premium">Premium Tow</option>
+    </select>
+    <input type="number" id="distance" placeholder="Distance in miles" min="1">
+    <button onclick="calculateCost()">Calculate Cost</button>
+    <div id="result"></div>
+  </section>
+
+  <section id="service-areas" class="about-section">
+    <div class="about-container">
+      <h2 class="section-title fade-up">Service Areas</h2>
+      <div class="about-subtitle fade-up">Providing Professional Towing Services Across Major Cities</div>
+      
+      <div class="feature-grid">
+        <div class="feature-item fade-up">
+          <div class="feature-icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="feature-content">
+            <h4>California</h4>
+            <p>Los Angeles • San Francisco • San Diego • Sacramento • Bakersfield</p>
+          </div>
+        </div>
+        
+        <div class="feature-item fade-up">
+          <div class="feature-icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="feature-content">
+            <h4>Nevada</h4>
+            <p>Las Vegas • Henderson • Sparks • North Las Vegas</p>
+          </div>
+        </div>
+        
+        <div class="feature-item fade-up">
+          <div class="feature-icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="feature-content">
+            <h4>Texas</h4>
+            <p>Houston • Dallas • San Antonio • Austin • Fort Worth</p>
+          </div>
+        </div>
+        
+        <div class="feature-item fade-up">
+          <div class="feature-icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="feature-content">
+            <h4>Florida</h4>
+            <p>Miami • Tampa • Orlando • Tallahassee • Fort Lauderdale</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-cta fade-up">
+        <h3>Need Towing Service in Your Area?</h3>
+        <p>Our extensive network ensures quick response times across all service areas.</p>
+        <a href="tel:1-888-758-2424" class="cta-button">
+          <i class="fas fa-phone-alt"></i>
+          Contact Us Now
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project Completion Section -->
+  <section id="project-completion" class="project-completion-section">
+    <div class="container">
+      <h2 class="section-title fade-up">Our Achievements</h2>
+      <div class="project-stats">
+        <div class="stat-box fade-up">
+          <div class="stat-circle">
+            <div class="stat-content">
+              <span data-stat="success-rate">90</span>
+              <span class="stat-symbol">%</span>
+            </div>
+          </div>
+          <h3 class="stat-label">Success Rate</h3>
+          <p class="stat-sublabel">Customer Satisfaction</p>
+        </div>
+
+        <div class="stat-box fade-up">
+          <div class="stat-circle">
+            <div class="stat-content">
+              <span data-stat="projects-done">13k</span>
+              <span class="stat-symbol">+</span>
+            </div>
+          </div>
+          <h3 class="stat-label">Projects Done</h3>
+          <p class="stat-sublabel">Completed Services</p>
+        </div>
+
+        <div class="stat-box fade-up">
+          <div class="stat-circle">
+            <div class="stat-content">
+              <span data-stat="response-time">30</span>
+              <span class="stat-symbol">min</span>
+            </div>
+          </div>
+          <h3 class="stat-label">Response Time</h3>
+          <p class="stat-sublabel">Average Arrival Time</p>
+        </div>
+
+        <div class="stat-box fade-up">
+          <div class="stat-circle">
+            <div class="stat-content">
+              <span data-stat="happy-clients">15k</span>
+              <span class="stat-symbol">+</span>
+            </div>
+          </div>
+          <h3 class="stat-label">Happy Clients</h3>
+          <p class="stat-sublabel">5-Star Reviews</p>
+        </div>
+      </div>
+      
+      <div class="refresh-stats">
+        <button class="refresh-button">
+          <i class="fas fa-sync-alt"></i>
+          Refresh Stats
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enhanced Feedback Section -->
+  <section id="testimonials" class="testimonials-section">
+    <div class="container">
+      <h2 class="section-title fade-up">Client Testimonials</h2>
+      <div class="testimonials-subtitle fade-up">What Our Clients Say About Us</div>
+
+      <!-- Success Metrics -->
+      <div class="success-metrics">
+        <div class="metric-item fade-up">
+          <div class="metric-icon">
+            <i class="fas fa-smile"></i>
+          </div>
+          <div class="metric-number" data-count="15000">15k</div>
+          <div class="metric-label">Happy Clients</div>
+        </div>
+        <div class="metric-item fade-up">
+          <div class="metric-icon">
+            <i class="fas fa-truck"></i>
+          </div>
+          <div class="metric-number" data-count="25000">22k</div>
+          <div class="metric-label">Successful Tows</div>
+        </div>
+        <div class="metric-item fade-up">
+          <div class="metric-icon">
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="metric-number" data-count="98">98%</div>
+          <div class="metric-label">Satisfaction Rate %</div>
+        </div>
+        <div class="metric-item fade-up">
+          <div class="metric-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="metric-number" data-count="15">15</div>
+          <div class="metric-label">Years Experience</div>
+        </div>
+      </div>
+
+      <!-- Testimonials Slider -->
+      <div class="testimonials-slider">
+        <div class="testimonial-card fade-up active">
+          <div class="testimonial-content">
+            <i class="fas fa-quote-left"></i>
+            <p>"Exceptional service! They arrived within 20 minutes of my call and got me back on the road quickly. Very professional and friendly staff."</p>
+          </div>
+          <div class="testimonial-author">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="John Smith">
+            <div class="author-info">
+              <h4>John Smith</h4>
+              <div class="rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <p>Los Angeles, CA</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card fade-up">
+          <div class="testimonial-content">
+            <i class="fas fa-quote-left"></i>
+            <p>"Best towing service in town! Their 24/7 availability and quick response time saved me during a late-night breakdown. Highly recommended!"</p>
+          </div>
+          <div class="testimonial-author">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Johnson">
+            <div class="author-info">
+              <h4>Sarah Johnson</h4>
+              <div class="rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <p>San Francisco, CA</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card fade-up">
+          <div class="testimonial-content">
+            <i class="fas fa-quote-left"></i>
+            <p>"Professional, efficient, and fairly priced. The driver was extremely helpful and took great care with my luxury vehicle. Will definitely use again!"</p>
+          </div>
+          <div class="testimonial-author">
+            <img src="https://randomuser.me/api/portraits/men/62.jpg" alt="Michael Chen">
+            <div class="author-info">
+              <h4>Michael Chen</h4>
+              <div class="rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+              <p>San Diego, CA</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-nav">
+        <button class="prev-testimonial"><i class="fas fa-chevron-left"></i></button>
+        <div class="testimonial-dots"></div>
+        <button class="next-testimonial"><i class="fas fa-chevron-right"></i></button>
+      </div>
+
+      <!-- Enhanced Feedback Form -->
+      <div class="feedback-form-container fade-up">
+        <div class="feedback-header">
+          <h3>Share Your Experience</h3>
+          <div class="feedback-subtitle">Your feedback helps us improve our service</div>
+        </div>
+        <form id="feedbackForm" class="feedback-form">
+          <div class="form-row">
+            <div class="form-group hover-effect">
+              <label for="name">
+                <i class="fas fa-user"></i>
+                Full Name
+              </label>
+              <input type="text" id="name" name="name" required placeholder="Enter your name">
+              <div class="input-highlight"></div>
+            </div>
+            <div class="form-group hover-effect">
+              <label for="email">
+                <i class="fas fa-envelope"></i>
+                Email Address
+              </label>
+              <input type="email" id="email" name="email" required placeholder="Enter your email">
+              <div class="input-highlight"></div>
+            </div>
+          </div>
+          <div class="form-group hover-effect">
+            <label for="rating">
+              <i class="fas fa-star"></i>
+              Your Rating
+            </label>
+            <div class="star-rating">
+              <i class="far fa-star" data-rating="1"></i>
+              <i class="far fa-star" data-rating="2"></i>
+              <i class="far fa-star" data-rating="3"></i>
+              <i class="far fa-star" data-rating="4"></i>
+              <i class="far fa-star" data-rating="5"></i>
+            </div>
+          </div>
+          <div class="form-group hover-effect">
+            <label for="feedback">
+              <i class="fas fa-comment"></i>
+              Your Feedback
+            </label>
+            <textarea id="feedback" name="feedback" rows="4" required placeholder="Share your experience with us"></textarea>
+            <div class="input-highlight"></div>
+          </div>
+          <button type="submit" class="submit-feedback">
+            <span>Submit Feedback</span>
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>How it works</h4>
+        <ul class="footer-links">
+          <li><a href="#services">Types of towing</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#locations">Tow truck near me</a></li>
+          <li><a href="#services">Wrecker service</a></li>
+          <li><a href="#calculator">Cost calculator</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4>Our Services</h4>
+        <ul class="footer-links">
+          <li><a href="services/car-towing.html">Car Towing</a></li>
+          <li><a href="services/heavy-duty-towing.html">Heavy Duty Towing</a></li>
+          <li><a href="services/gas-delivery.html">Gas Delivery</a></li>
+          <li><a href="services/storage.html">Vehicle Storage</a></li>
+          <li><a href="services/winch-out.html">Winch Out Service</a></li>
+          <li><a href="services/lockout.html">Lockout Services</a></li>
+          <li><a href="services/jumpstart.html">Jump Start</a></li>
+          <li><a href="services/long-distance.html">Long Distance Towing</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4>Service Locations</h4>
+        <ul class="footer-links locations-grid">
+          <li><a href="locations/california.html">California</a></li>
+          <li><a href="locations/florida.html">Florida</a></li>
+          <li><a href="locations/texas.html">Texas</a></li>
+          <li><a href="locations/nevada.html">Nevada</a></li>
+          <li><a href="locations/new-york.html">New York</a></li>
+          <li><a href="locations/washington.html">Washington</a></li>
+          <li><a href="locations/colorado.html">Colorado</a></li>
+          <li><a href="locations/georgia.html">Georgia</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section contact-info">
+        <h4>Contact Information</h4>
+        <div class="contact-details">
+          <p><i class="fas fa-phone"></i> Emergency: <a href="tel:1-888-758-2424">1-888-758-2424</a></p>
+          <p><i class="fas fa-envelope"></i> Email: <a href="mailto:help@towman-usa.com">help@towman-usa.com</a></p>
+          <p><i class="fas fa-map-marker-alt"></i> Main Office:</p>
+          <address>
+            123 Towing Ave<br>
+            Los Angeles, CA 90001<br>
+            United States
+          </address>
+        </div>
+        <div class="social-links">
+          <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+          <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-section payment-info">
+        <h4>Payment Methods</h4>
+        <div class="payment-icons">
+          <i class="fab fa-cc-visa"></i>
+          <i class="fab fa-cc-mastercard"></i>
+          <i class="fab fa-cc-amex"></i>
+          <i class="fab fa-cc-discover"></i>
+        </div>
+        <div class="certifications">
+          <img src="images/bbb-accredited.png" alt="BBB Accredited Business">
+          <img src="images/ssl-secure.png" alt="SSL Secure">
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-nav">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-of-service.html">Terms of Service</a>
+        <a href="sitemap.html">Sitemap</a>
+        <a href="careers.html">Careers</a>
+        <a href="blog.html">Blog</a>
+      </div>
+      <p class="copyright">&copy; 2024 TOWMAN USA. All rights reserved.</p>
+      <p class="disclaimer">TOWMAN USA is a professional towing and roadside assistance service provider. Available 24/7 for emergency services.</p>
+    </div>
+  </footer>
+
+  <!-- Login Modal -->
+  <div class="modal" id="loginModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="hideModal('login')">&times;</span>
+      <form class="auth-form">
+        <h2>Welcome Back</h2>
+        <div class="form-group">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" required>
+        </div>
+        <button type="submit" class="auth-btn">Log In</button>
+        <div class="social-login">
+          <a href="#" class="social-btn facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-btn google"><i class="fab fa-google"></i></a>
+          <a href="#" class="social-btn apple"><i class="fab fa-apple"></i></a>
+        </div>
+        <div class="auth-switch">
+          Don't have an account? <a href="#" onclick="switchModal('signup')">Sign Up</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Signup Modal -->
+  <div class="modal" id="signupModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="hideModal('signup')">&times;</span>
+      <form class="auth-form">
+        <h2>Create Account</h2>
+        <div class="form-group">
+          <label for="signupName">Full Name</label>
+          <input type="text" id="signupName" required>
+        </div>
+        <div class="form-group">
+          <label for="signupEmail">Email</label>
+          <input type="email" id="signupEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="signupPassword">Password</label>
+          <input type="password" id="signupPassword" required>
+        </div>
+        <div class="form-group">
+          <label for="signupConfirm">Confirm Password</label>
+          <input type="password" id="signupConfirm" required>
+        </div>
+        <button type="submit" class="auth-btn">Sign Up</button>
+        <div class="social-login">
+          <a href="#" class="social-btn facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-btn google"><i class="fab fa-google"></i></a>
+          <a href="#" class="social-btn apple"><i class="fab fa-apple"></i></a>
+        </div>
+        <div class="auth-switch">
+          Already have an account? <a href="#" onclick="switchModal('login')">Log In</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="chat-widget">
+    <div class="chat-button" onclick="toggleChat()">
+        <i class="fas fa-comments"></i>
+    </div>
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <h3>Action Towing Assistant</h3>
+            <div class="chat-close" onclick="toggleChat()">×</div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will be added here dynamically -->
+        </div>
+        <div class="chat-input-container">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+            <button class="chat-send" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+  </div>
+
+  <div class="popup-overlay" id="emergencyPopup">
+    <div class="popup-container">
+      <button class="popup-close" onclick="closePopup()">×</button>
+      <img src="https://media.tenor.com/6dJIfFkBXssAAAAi/towing.gif" alt="Action Towing" class="popup-logo">
+      <div class="popup-content">
+        <strong>🚨 EMERGENCY TOWING SERVICE 🚨</strong>
+      </div>
+      <div class="popup-content">
+        During these times, we are maintaining every necessary precaution to ensure the safety of our staff and our clientele.
+      </div>
+      <div class="popup-content">
+        Need immediate assistance? Don't wait!
+      </div>
+      <a href="tel:720-737-9118" class="popup-phone">
+        <i class="fas fa-phone-alt"></i> 720-737-9118
+      </a>
+    </div>
+  </div>
+
+  <!-- Add Emergency Call Widget before the closing body tag -->
+  <div class="emergency-call-widget">
+    <div class="emergency-call-button" onclick="toggleEmergencyCall()">
+        <i class="fas fa-phone"></i>
+    </div>
+    <script>
+function toggleEmergencyCall() {
+    window.location.href = "tel:+18005551234";
+}
+</script>
+    <div class="emergency-container" id="emergencyContainer">
+        <div class="emergency-header">
+            <h3><i class="fas fa-exclamation-triangle"></i> Emergency Towing</h3>
+            <div class="emergency-close" onclick="toggleEmergencyCall()">×</div>
+        </div>
+        <div class="emergency-content">
+            <div class="emergency-title">Need Immediate Assistance?</div>
+            <div class="emergency-description">
+                Our emergency team is available 24/7.<br>
+                Average response time: 15-20 minutes
+            </div>
+            <div class="emergency-buttons">
+                <a href="tel:+17207379118" class="emergency-call-now" id="callButton" onclick="return makePhoneCall();">
+                    <i class="fas fa-phone-alt"></i>
+                    Call Now: (720) 737-9118
+                </a>
+                <!-- Fallback buttons for different methods -->
+                <a href="tel:7207379118" class="emergency-call-now hidden" id="simpleTelButton">
+                    Simple Call: 720-737-9118
+                </a>
+                <button class="emergency-call-now hidden" id="directCallButton" onclick="window.open('tel:+17207379118');">
+                    Direct Call
+                </button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <script>
+    // Popup functionality
+    function showPopup() {
+      const popup = document.getElementById('emergencyPopup');
+      if (popup) {
+        popup.style.opacity = '1';
+        popup.style.visibility = 'visible';
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closePopup() {
+      const popup = document.getElementById('emergencyPopup');
+      if (popup) {
+        popup.style.opacity = '0';
+        popup.style.visibility = 'hidden';
+        document.body.style.overflow = 'auto';
+        
+        // Set a cookie to remember the popup was closed
+        localStorage.setItem('popupClosed', 'true');
+        
+        // Schedule next popup show after 3 minutes
+        setTimeout(showPopup, 180000);
+      }
+    }
+
+    // Show popup on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      if (!localStorage.getItem('popupClosed')) {
+        setTimeout(showPopup, 2000); // Show after 2 seconds
+      }
+    });
+
+    // Handle popup clicks
+    document.addEventListener('click', function(e) {
+      const popup = document.getElementById('emergencyPopup');
+      if (popup && e.target === popup) {
+        closePopup();
+      }
+    });
+
+    // Handle popup phone number clicks
+    const popupPhone = document.querySelector('.popup-phone');
+    if (popupPhone) {
+      popupPhone.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent popup from closing when clicking phone number
+      });
+    }
+
+    // Disable popup functionality
+    window.addEventListener('DOMContentLoaded', function() {
+      // Force disable any popup functionality
+      if (window.EmergencyPopup) {
+        window.EmergencyPopup = null;
+      }
+      
+      const popup = document.getElementById('emergencyPopup');
+      if (popup) {
+        popup.style.display = 'none';
+        popup.remove();
+      }
+    });
+
+    // Chat functionality
+    const chatResponses = {
+      greetings: ['hello', 'hi', 'hey', 'howdy'],
+      services: ['services', 'help', 'towing', 'assistance'],
+      pricing: ['price', 'cost', 'rate', 'charge'],
+      contact: ['contact', 'phone', 'call', 'reach'],
+      location: ['location', 'address', 'where', 'area'],
+      response:['ok']
+    };
+
+    const botResponses = {
+      greetings: "Hello! Welcome to Action Towing. How can I assist you today?",
+      services: "We offer a variety of towing services including: \n• Car Towing\n• Motorcycle Towing\n• Heavy Duty Towing\n• Roadside Assistance",
+      pricing: "Our towing services start at $75 for basic towing. For a detailed quote, please call us at 720-737-9118.",
+      contact: "You can reach us 24/7 at 720-737-9118 for immediate assistance.",
+      location: "We are located in Aurora and serve the surrounding areas. For immediate service, please call us.",
+      default: "I'm here to help! For immediate assistance, please call us at 720-737-9118 or ask me about our services, pricing, or location.",
+      response:"Thank you for Connecting with us"
+    };
+
+    // Scroll to services function
+    function scrollToServices() {
+      document.getElementById('services').scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+
+    // Enhanced Image Slider functionality
+    class ImageSlider {
+      constructor() {
+        this.currentSlide = 0;
+        this.slides = document.querySelectorAll('.slider-image');
+        this.autoPlayInterval = null;
+        this.touchStartX = 0;
+        this.touchEndX = 0;
+        this.init();
+      }
+
+      init() {
+        // Create navigation dots
+        const nav = document.getElementById('sliderNav');
+        this.slides.forEach((_, index) => {
+          const dot = document.createElement('div');
+          dot.className = `slider-dot ${index === 0 ? 'active' : ''}`;
+          dot.addEventListener('click', () => this.goToSlide(index));
+          nav.appendChild(dot);
+        });
+
+        // Start autoplay
+        this.startAutoPlay();
+
+        // Add touch events for mobile
+        const slider = document.getElementById('imageSlider');
+        slider.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: true });
+        slider.addEventListener('touchend', (e) => this.handleTouchEnd(e), { passive: true });
+
+        // Pause on hover
+        slider.addEventListener('mouseenter', () => this.stopAutoPlay());
+        slider.addEventListener('mouseleave', () => this.startAutoPlay());
+
+        // Handle visibility change
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) {
+            this.stopAutoPlay();
+          } else {
+            this.startAutoPlay();
+          }
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowLeft') this.prevSlide();
+          if (e.key === 'ArrowRight') this.nextSlide();
+        });
+      }
+
+      handleTouchStart(e) {
+        this.touchStartX = e.touches[0].clientX;
+      }
+
+      handleTouchEnd(e) {
+        this.touchEndX = e.changedTouches[0].clientX;
+        if (this.touchStartX - this.touchEndX > 50) {
+          this.nextSlide();
+        } else if (this.touchEndX - this.touchStartX > 50) {
+          this.prevSlide();
+        }
+      }
+
+      goToSlide(index) {
+        // Remove active class from current slide
+        this.slides[this.currentSlide].classList.remove('active');
+        document.querySelectorAll('.slider-dot')[this.currentSlide].classList.remove('active');
+
+        // Update current slide
+        this.currentSlide = index;
+
+        // Add active class to new slide
+        this.slides[this.currentSlide].classList.add('active');
+        document.querySelectorAll('.slider-dot')[this.currentSlide].classList.add('active');
+      }
+
+      nextSlide() {
+        const next = (this.currentSlide + 1) % this.slides.length;
+        this.goToSlide(next);
+      }
+
+      prevSlide() {
+        const prev = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+        this.goToSlide(prev);
+      }
+
+      startAutoPlay() {
+        if (this.autoPlayInterval) this.stopAutoPlay();
+        this.autoPlayInterval = setInterval(() => this.nextSlide(), 5000);
+      }
+
+      stopAutoPlay() {
+        if (this.autoPlayInterval) {
+          clearInterval(this.autoPlayInterval);
+          this.autoPlayInterval = null;
+        }
+      }
+    }
+
+    // Initialize slider when document is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      new ImageSlider();
+    });
+
+    // Modal Functions
+    function showModal(type) {
+      const modal = document.getElementById(`${type}Modal`);
+      modal.style.display = 'block';
+      setTimeout(() => modal.classList.add('active'), 10);
+    }
+
+    function hideModal(type) {
+      const modal = document.getElementById(`${type}Modal`);
+      modal.classList.remove('active');
+      setTimeout(() => modal.style.display = 'none', 300);
+    }
+
+    function switchModal(type) {
+      const currentType = type === 'login' ? 'signup' : 'login';
+      hideModal(currentType);
+      setTimeout(() => showModal(type), 300);
+    }
+
+    // Close modals when clicking outside
+    window.onclick = function(event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.classList.remove('active');
+        setTimeout(() => event.target.style.display = 'none', 300);
+      }
+    }
+
+    // Enhanced Theme Toggle
+    function toggleTheme() {
+      document.body.classList.toggle('light');
+      localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+      
+      // Add transition class
+      document.body.classList.add('theme-transition');
+      setTimeout(() => {
+        document.body.classList.remove('theme-transition');
+      }, 300);
+    }
+
+    // Set initial theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      document.body.classList.toggle('light', savedTheme === 'light');
+    } else {
+      // Set default theme based on user's system preference
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        document.body.classList.add('light');
+      }
+    }
+
+    // Watch for system theme changes
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
+        if (!localStorage.getItem('theme')) {
+          document.body.classList.toggle('light', e.matches);
+        }
+      });
+    }
+
+    // Form Validation
+    document.querySelectorAll('.auth-form').forEach(form => {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Add your authentication logic here
+        console.log('Form submitted:', this);
+      });
+    });
+
+    // GSAP animations
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero animations
+    gsap.from('.hero-content > *', {
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      stagger: 0.2,
+      ease: "power2.out"
+    });
+
+    // Scroll animations
+    gsap.utils.toArray('.fade-up').forEach((el, i) => {
+      gsap.from(el, {
+        opacity: 0,
+        y: 50,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 80%",
+          toggleActions: "play none none none"
+        }
+      });
+    });
+
+    // Service card hover animations
+    const serviceCards = document.querySelectorAll('.service-card');
+    serviceCards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        gsap.to(card, {
+          scale: 1.05,
+          duration: 0.3,
+          ease: "power2.out"
+        });
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          scale: 1,
+          duration: 0.3,
+          ease: "power2.out"
+        });
+      });
+    });
+
+    // Price Calculator
+    function calculateCost() {
+      const serviceType = document.getElementById('service-type').value;
+      const distance = parseFloat(document.getElementById('distance').value);
+      let baseCost = 0;
+      let perMileCost = 0;
+
+      switch(serviceType) {
+        case 'basic':
+          baseCost = 75;
+          perMileCost = 3.5;
+          break;
+        case 'standard':
+          baseCost = 95;
+          perMileCost = 4;
+          break;
+        case 'premium':
+          baseCost = 150;
+          perMileCost = 5;
+          break;
+      }
+
+      if (serviceType && !isNaN(distance)) {
+        const totalCost = baseCost + (Math.max(0, distance - 5) * perMileCost);
+        document.getElementById('result').innerHTML = `Estimated Cost: $${totalCost.toFixed(2)}`;
+        
+        gsap.from("#result", {
+          scale: 0.5,
+          opacity: 0,
+          duration: 0.5,
+          ease: "back.out"
+        });
+      } else {
+        document.getElementById('result').innerHTML = "Please fill in all fields";
+      }
+    }
+
+    // Smooth scroll for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Update phone number handling
+    const phoneNumber = '1-888--2424';
+    
+    document.querySelectorAll('a[href^="tel:"]').forEach(link => {
+      link.addEventListener('click', function(e) {
+        // You can add analytics tracking here
+        console.log('Call initiated to:', phoneNumber);
+      });
+    });
+
+    // Chat functionality
+    function toggleChat() {
+      const chatContainer = document.getElementById('chatContainer');
+      chatContainer.classList.toggle('active');
+      if (chatContainer.classList.contains('active') && document.getElementById('chatMessages').children.length === 0) {
+        addBotMessage("Hi! How can I help you today? Feel free to ask about our services, pricing, or location.");
+      }
+    }
+
+    function addMessage(message, isUser = false) {
+      const chatMessages = document.getElementById('chatMessages');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `chat-message ${isUser ? 'user' : 'bot'}`;
+      messageDiv.textContent = message;
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function addBotMessage(message) {
+      addMessage(message, false);
+    }
+
+    function addUserMessage(message) {
+      addMessage(message, true);
+    }
+
+    function handleKeyPress(event) {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    }
+
+    function getBotResponse(message) {
+      const lowerMessage = message.toLowerCase();
+      
+      // Check each category of responses
+      for (const [category, keywords] of Object.entries(chatResponses)) {
+        if (keywords.some(keyword => lowerMessage.includes(keyword))) {
+          return botResponses[category];
+        }
+      }
+      
+      return botResponses.default;
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const message = input.value.trim();
+      
+      if (message) {
+        addUserMessage(message);
+        input.value = '';
+        
+        // Simulate typing delay
+        setTimeout(() => {
+          const response = getBotResponse(message);
+          addBotMessage(response);
+        }, 500);
+      }
+    }
+
+    // Initialize chat with a welcome message when opened
+    document.addEventListener('DOMContentLoaded', () => {
+        const chatButton = document.querySelector('.chat-button');
+        // Add pulse animation
+        setInterval(() => {
+            chatButton.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                chatButton.style.transform = 'scale(1)';
+            }, 200);
+        }, 3000);
+    });
+
+    // Testimonials Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize success metrics counter animation
+        const metrics = document.querySelectorAll('.metric-number');
+        let animated = false;
+
+        function animateMetrics() {
+            if (animated) return;
+            
+            metrics.forEach(metric => {
+                const target = parseInt(metric.getAttribute('data-count'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+
+                const updateCount = () => {
+                    if (current < target) {
+                        current = Math.min(current + step, target);
+                        metric.textContent = Math.round(current).toLocaleString();
+                        requestAnimationFrame(updateCount);
+                    }
+                };
+
+                updateCount();
+            });
+
+            animated = true;
+        }
+
+        // Trigger animation when metrics are in view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateMetrics();
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelector('.success-metrics')?.forEach(metric => {
+            observer.observe(metric);
+        });
+
+        // Testimonials slider functionality
+        const testimonials = document.querySelectorAll('.testimonial-card');
+        const dotsContainer = document.querySelector('.testimonial-dots');
+        let currentTestimonial = 0;
+
+        // Create dots
+        testimonials.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.className = `dot ${index === 0 ? 'active' : ''}`;
+            dot.addEventListener('click', () => goToTestimonial(index));
+            dotsContainer.appendChild(dot);
+        });
+
+        function updateTestimonials() {
+            testimonials.forEach((testimonial, index) => {
+                testimonial.classList.remove('active');
+                testimonial.style.transform = `translateX(${100 * (index - currentTestimonial)}%)`;
+            });
+            testimonials[currentTestimonial].classList.add('active');
+
+            // Update dots
+            document.querySelectorAll('.dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentTestimonial);
+            });
+        }
+
+        function goToTestimonial(index) {
+            currentTestimonial = index;
+            updateTestimonials();
+        }
+
+        function nextTestimonial() {
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            updateTestimonials();
+        }
+
+        function prevTestimonial() {
+            currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+            updateTestimonials();
+        }
+
+        // Add navigation event listeners
+        document.querySelector('.next-testimonial')?.addEventListener('click', nextTestimonial);
+        document.querySelector('.prev-testimonial')?.addEventListener('click', prevTestimonial);
+
+        // Auto-advance testimonials
+        setInterval(nextTestimonial, 5000);
+
+        // Star rating functionality
+        const starRating = document.querySelector('.star-rating');
+        if (starRating) {
+            const stars = starRating.querySelectorAll('i');
+            let userRating = 0;
+
+            stars.forEach(star => {
+                star.addEventListener('mouseover', function() {
+                    const rating = this.getAttribute('data-rating');
+                    highlightStars(rating);
+                });
+
+                star.addEventListener('click', function() {
+                    userRating = this.getAttribute('data-rating');
+                    highlightStars(userRating);
+                });
+            });
+
+            starRating.addEventListener('mouseleave', () => {
+                highlightStars(userRating);
+            });
+
+            function highlightStars(rating) {
+                stars.forEach(star => {
+                    const starRating = star.getAttribute('data-rating');
+                    star.classList.toggle('fas', starRating <= rating);
+                    star.classList.toggle('far', starRating > rating);
+                });
+            }
+        }
+
+        // Feedback form submission
+        const feedbackForm = document.getElementById('feedbackForm');
+        if (feedbackForm) {
+            feedbackForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Here you would typically send the data to your server
+                const formData = {
+                    name: this.name.value,
+                    email: this.email.value,
+                    rating: userRating,
+                    feedback: this.feedback.value
+                };
+
+                // Show success message
+                this.innerHTML = `
+                    <div style="text-align: center; padding: 40px;">
+                        <i class="fas fa-check-circle" style="font-size: 3rem; color: var(--success); margin-bottom: 20px;"></i>
+                        <h3>Thank You for Your Feedback!</h3>
+                        <p>Your feedback has been submitted successfully.</p>
+                    </div>
+                `;
+            });
+        }
+
+        // Project Completion Circle Animations
+        const circles = document.querySelectorAll('.progress-ring-circle');
+        circles.forEach(circle => {
+            const radius = circle.r.baseVal.value;
+            const circumference = radius * 2 * Math.PI;
+            
+            circle.style.strokeDasharray = `${circumference} ${circumference}`;
+            circle.style.strokeDashoffset = circumference;
+        });
+
+        function setProgress(circle, percent) {
+            const radius = circle.r.baseVal.value;
+            const circumference = radius * 2 * Math.PI;
+            const offset = circumference - (percent / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+        }
+
+        // Animate project stats when in view
+        const projectStats = document.querySelector('.project-stats');
+        if (projectStats) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Animate numbers
+                        entry.target.querySelectorAll('.stat-number').forEach(stat => {
+                            const value = parseInt(stat.getAttribute('data-value'));
+                            let current = 0;
+                            const increment = value / 100;
+                            const duration = 2000; // 2 seconds
+                            const interval = duration / 100;
+
+                            const counter = setInterval(() => {
+                                current += increment;
+                                if (current >= value) {
+                                    stat.textContent = value.toLocaleString();
+                                    clearInterval(counter);
+                                } else {
+                                    stat.textContent = Math.round(current).toLocaleString();
+                                }
+                            }, interval);
+
+                            // Animate circles
+                            const circle = stat.closest('.stat-box').querySelector('.progress-ring-circle');
+                            if (circle) {
+                                let progress = 0;
+                                const targetProgress = value > 100 ? 100 : value;
+                                const progressInterval = setInterval(() => {
+                                    progress += 1;
+                                    setProgress(circle, progress);
+                                    if (progress >= targetProgress) {
+                                        clearInterval(progressInterval);
+                                    }
+                                }, duration / 100);
+                            }
+                        });
+
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            observer.observe(projectStats);
+        }
+
+        // Enhanced Feedback Form Interactions
+        const formGroups = document.querySelectorAll('.form-group.hover-effect');
+        formGroups.forEach(group => {
+            const input = group.querySelector('input, textarea');
+            const highlight = group.querySelector('.input-highlight');
+            
+            if (input && highlight) {
+                // Add focus effects
+                input.addEventListener('focus', () => {
+                    highlight.classList.add('active');
+                    group.classList.add('focused');
+                });
+
+                input.addEventListener('blur', () => {
+                    highlight.classList.remove('active');
+                    group.classList.remove('focused');
+                    if (input.value) {
+                        group.classList.add('has-value');
+                    } else {
+                        group.classList.remove('has-value');
+                    }
+                });
+
+                // Add hover effects
+                group.addEventListener('mouseenter', () => {
+                    if (!group.classList.contains('focused')) {
+                        highlight.style.borderColor = 'rgba(0,123,255,0.3)';
+                    }
+                });
+
+                group.addEventListener('mouseleave', () => {
+                    if (!group.classList.contains('focused')) {
+                        highlight.style.borderColor = 'transparent';
+                    }
+                });
+            }
+        });
+
+        // Enhanced Star Rating
+        const enhancedStarRating = document.querySelector('.star-rating');
+        if (enhancedStarRating) {
+            const stars = enhancedStarRating.querySelectorAll('i');
+            let userRating = 0;
+
+            stars.forEach(star => {
+                // Add hover animations
+                star.addEventListener('mouseenter', function() {
+                    const rating = this.getAttribute('data-rating');
+                    stars.forEach(s => {
+                        const r = s.getAttribute('data-rating');
+                        if (r <= rating) {
+                            s.classList.add('hover');
+                        }
+                    });
+                });
+
+                star.addEventListener('mouseleave', function() {
+                    stars.forEach(s => s.classList.remove('hover'));
+                });
+
+                // Enhanced click effect
+                star.addEventListener('click', function() {
+                    userRating = this.getAttribute('data-rating');
+                    stars.forEach(s => {
+                        const r = s.getAttribute('data-rating');
+                        s.classList.toggle('fas', r <= userRating);
+                        s.classList.toggle('far', r > userRating);
+                        if (r <= userRating) {
+                            s.classList.add('selected');
+                        } else {
+                            s.classList.remove('selected');
+                        }
+                    });
+                });
+            });
+        }
+
+        // Submit button hover effect
+        const submitButton = document.querySelector('.submit-feedback');
+        if (submitButton) {
+            submitButton.addEventListener('mouseenter', () => {
+                submitButton.querySelector('i').style.transform = 'translateX(5px)';
+            });
+
+            submitButton.addEventListener('mouseleave', () => {
+                submitButton.querySelector('i').style.transform = 'translateX(0)';
+            });
+        }
+    });
+
+    // Add this JavaScript code before the closing 
+    </script>
+  </script>
+</body>
+</html>
